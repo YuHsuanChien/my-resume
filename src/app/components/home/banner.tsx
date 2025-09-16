@@ -126,15 +126,6 @@ export default function Banner() {
 					</a>
 				</li>
 			</ul>
-
-			{/* <div className='mt-12 lg:mt-10 2xl:mt-8'>
-				<a
-					href='#AboutMe'
-					className='flex flex-col items-center justify-center animate-bounce'>
-					<p className='text-xl lg:text-2xl text-white'>active</p>
-					<FaArrowAltCircleDown className='text-xl lg:text-2xl text-white' />
-				</a>
-			</div> */}
 		</section>
 	);
 }
