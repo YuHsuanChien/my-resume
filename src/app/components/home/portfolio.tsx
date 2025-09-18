@@ -102,9 +102,9 @@ export default function Portfolio() {
 			scrollTrigger: {
 				trigger: wrapperEl,
 				start: "center center",
-				end: "+=200%",
+				end: "+=250%",
 				pin: wrapperEl,
-				scrub: 0.5,
+				scrub: 1,
 				pinSpacing: true,
 				markers: false,
 			},
@@ -147,7 +147,7 @@ export default function Portfolio() {
 		const moveEls = gsap.utils.toArray<HTMLElement>(".moveEl");
 		moveEls.forEach((el) => {
 			gsap.to(el, {
-				y: 100,
+				y: 300,
 				delay: -0.5,
 				scrollTrigger: {
 					trigger: wrapperEl,
@@ -162,7 +162,7 @@ export default function Portfolio() {
 
 	return (
 		<section
-			className='text-center text-3xl text-gray-700 w-full h-screen overflow-hidden relative bg-amber-100/30 brightness-70'
+			className='text-center text-3xl text-gray-700 w-full h-screen overflow-hidden relativ brightness-70'
 			ref={wrapper}>
 			<div
 				className='grid grid-cols-3 grid-rows-3 w-full h-full gap-10 px-3 absolute inset-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'

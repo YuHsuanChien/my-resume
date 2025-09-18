@@ -56,7 +56,7 @@ export default function Sidebar() {
 	return (
 		<div
 			ref={sideBarEl}
-			className={`fixed z-20 top-0 right-0 w-64 h-screen bg-gray-800 text-white p-4 transition-all duration-500
+			className={`fixed z-50 top-0 right-0 w-64 h-screen bg-gray-800 text-white p-4 transition-all duration-500
  ${isOpen ? "translate-x-0" : "translate-x-[110%]"}`}>
 			{/* X icon */}
 			<div className='flex justify-end'>
