@@ -16,7 +16,7 @@ export default function HeaderBar() {
 	return (
 		<section className='w-screen fixed z-10 bg-black lg:px-6 xl:px-12 2xl:px-16'>
 			<div className='flex justify-between items-center py-2 container'>
-				<div className='h1 text-white'>JK.chien</div>
+				<div className='h4 text-white'>JK.chien</div>
 				<div>
 					<ul className='hidden lg:block'>
 						{url.map((item) => (

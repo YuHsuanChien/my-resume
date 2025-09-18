@@ -1,11 +1,11 @@
 "use client";
-import React, { use, useEffect } from "react";
+import React from "react";
 import { FaGithub, FaInstagram, FaFacebook } from "react-icons/fa";
 import { gsap } from "gsap";
-import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 
-gsap.registerPlugin(ScrollToPlugin);
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Banner() {
 	const container = React.useRef<HTMLElement>(null);
