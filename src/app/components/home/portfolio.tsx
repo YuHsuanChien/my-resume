@@ -1,191 +1,299 @@
-"use client";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
-import React, { useEffect } from "react";
+'use client';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
+import React, { useEffect, useState } from 'react';
 
+// 註冊 ScrollTrigger 插件
 gsap.registerPlugin(ScrollTrigger);
 
 interface Pic {
-	name: string;
-	url: string;
+  name: string;
+  url: string;
 }
 
 export default function Portfolio() {
-	const pics: Pic[] = [
-		{
-			name: "CICD",
-			url: "/portfolio/cicd.png",
-		},
-		{
-			name: "gx",
-			url: "/portfolio/gx.png",
-		},
-		{
-			name: "gcp",
-			url: "/portfolio/gcp.png",
-		},
-		{
-			name: "Hofit",
-			url: "/portfolio/Hofit.png",
-		},
-		{
-			name: "xsg",
-			url: "/portfolio/xsg.png",
-		},
-		{
-			name: "stock",
-			url: "/portfolio/stock.png",
-		},
-		{
-			name: "CICD2",
-			url: "/portfolio/cicd.png",
-		},
-		{
-			name: "gx2",
-			url: "/portfolio/gx.png",
-		},
-		{
-			name: "Hofit2",
-			url: "/portfolio/Hofit.png",
-		},
-	];
+  /**
+   * 使用 state 來追蹤視窗尺寸
+   * 當這個 state 改變時，會觸發 useGSAP 重新執行
+   */
+  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
 
-	const container = React.useRef<HTMLDivElement>(null);
-	const wrapper = React.useRef<HTMLElement>(null);
-	const imgRefs = React.useRef<(HTMLDivElement | null)[]>([]);
+  // 圖片資料陣列
+  const pics: Pic[] = [
+    { name: 'CICD', url: '/portfolio/cicd.png' },
+    { name: 'gx', url: '/portfolio/gx.png' },
+    { name: 'gcp', url: '/portfolio/gcp.png' },
+    { name: 'Hofit', url: '/portfolio/Hofit.png' },
+    { name: 'xsg', url: '/portfolio/xsg.png' },
+    { name: 'stock', url: '/portfolio/stock.png' },
+    { name: 'CICD2', url: '/portfolio/cicd.png' },
+    { name: 'gx2', url: '/portfolio/gx.png' },
+    { name: 'Hofit2', url: '/portfolio/Hofit.png' },
+  ];
 
-	/**
-	 * 作品集圖片牆放大縮小
-	 */
-	useGSAP(() => {
-		const el = container.current;
-		const wrapperEl = wrapper.current;
-		const middlePic = imgRefs.current[4];
+  // 建立 refs 來引用 DOM 元素
+  const container = React.useRef<HTMLDivElement>(null); // 圖片容器
+  const wrapper = React.useRef<HTMLElement>(null); // 外層 section
+  const imgRefs = React.useRef<(HTMLDivElement | null)[]>([]); // 所有圖片的 ref 陣列
 
-		if (!middlePic) return;
+  /**
+   * 監聽視窗 resize 事件
+   * 使用 useEffect 只在組件掛載時設置一次監聽器
+   */
+  useEffect(() => {
+    // 🎯 步驟 1: 初始化視窗尺寸（組件首次載入時）
+    setWindowSize({
+      width: window.innerWidth,
+      height: window.innerHeight,
+    });
 
-		const rectBefore = el!.getBoundingClientRect();
-		console.log("容器原始尺寸：", rectBefore);
+    // 用於 debounce 的計時器
+    let resizeTimer: NodeJS.Timeout;
 
-		gsap.set(el, {
-			rowGap: "100px",
-			columnGap: "200px",
-			width: rectBefore.width * 2,
-			height: rectBefore.height * 2,
-		});
+    /**
+     * 處理 resize 的函數
+     * 使用 debounce 技巧：等待使用者停止調整視窗 300ms 後才執行
+     * 這樣可以避免在調整過程中頻繁觸發，提升性能
+     */
+    const handleResize = () => {
+      // 清除之前的計時器
+      clearTimeout(resizeTimer);
 
-		// 測量放大後的格子尺寸
-		const rect = middlePic.getBoundingClientRect();
-		console.log("放大後格子尺寸：", rect);
+      // 設置新的計時器：300ms 後才更新 state
+      resizeTimer = setTimeout(() => {
+        // 🎯 步驟 2: 更新視窗尺寸 state
+        // 這會觸發 useGSAP 重新執行（因為 windowSize 在 dependencies 中）
+        setWindowSize({
+          width: window.innerWidth,
+          height: window.innerHeight,
+        });
+      }, 300); // 300ms 的延遲
+    };
 
-		const newDiv = document.createElement("div");
-		newDiv.className =
-			"newDiv bg-black absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-lg flex items-center justify-center";
-		el?.appendChild(newDiv);
+    // 🎯 步驟 3: 綁定 resize 事件監聽器
+    window.addEventListener('resize', handleResize);
 
-		const newSpan = document.createElement("span");
-		newSpan.className = "newSpanEl text-white text-2xl";
-		newSpan.textContent = "作品集...";
-		newDiv.appendChild(newSpan);
+    // 🧹 清理函數：組件卸載時執行
+    return () => {
+      window.removeEventListener('resize', handleResize); // 移除事件監聽器
+      clearTimeout(resizeTimer); // 清除計時器
+    };
+  }, []); // 空依賴陣列 = 只在組件掛載時執行一次
 
-		gsap.set(".newDiv", {
-			width: rect.width * 2,
-			height: rect.height * 2,
-		});
+  /**
+   * 🎬 GSAP 動畫主邏輯
+   * useGSAP 是專為 React 設計的 hook，會自動處理清理工作
+   */
+  useGSAP(
+    () => {
+      // 取得 DOM 元素的引用
+      const el = container.current; // 圖片容器
+      const wrapperEl = wrapper.current; // 外層容器
+      const middlePic = imgRefs.current[4]; // 中間的圖片（索引 4）
 
-		gsap.set(middlePic, { opacity: 0 });
+      // 安全檢查：如果元素不存在就不執行
+      if (!middlePic || !el || !wrapperEl) return;
 
-		gsap.set(".newSpanEl", { opacity: 1 });
+      console.log('🔄 動畫重新執行，視窗尺寸：', windowSize);
 
-		const tl = gsap.timeline({
-			scrollTrigger: {
-				trigger: wrapperEl,
-				start: "center center",
-				end: "+=250%",
-				pin: wrapperEl,
-				scrub: 1,
-				pinSpacing: true,
-				markers: false,
-			},
-		});
+      // ==================== 動畫設置開始 ====================
 
-		tl.to(el, {
-			rowGap: "10px",
-			columnGap: "35px",
-			width: rectBefore.width,
-			height: rectBefore.height,
-			onComplete: () => {
-				// 動畫完成後測量實際的格子尺寸
-				const finalRect = middlePic.getBoundingClientRect();
-				console.log("動畫完成後的實際格子尺寸：", finalRect);
-			},
-		})
-			.to(
-				".newSpanEl",
-				{
-					opacity: 0,
-					duration: 0.5,
-				},
-				-0.4
-			)
-			.to(
-				".newDiv",
-				{
-					width: rect.width / 2, // 因為容器縮小到 1/3，格子也會縮小到相應比例
-					height: rect.height / 2,
-					duration: 1.5,
-				},
-				-0.4
-			)
-			.to(".newDiv", { opacity: 0, duration: 0.01 })
-			.to(middlePic, { opacity: 1, duration: 0.01 });
+      // 📏 步驟 1: 測量容器的原始尺寸
+      const rectBefore = el.getBoundingClientRect();
+      console.log('📦 容器原始尺寸：', rectBefore);
 
-		/**
-		 * 中間行向下滑動，不再pin
-		 */
-		const moveEls = gsap.utils.toArray<HTMLElement>(".moveEl");
-		moveEls.forEach((el) => {
-			gsap.to(el, {
-				y: 300,
-				delay: -0.5,
-				scrollTrigger: {
-					trigger: wrapperEl,
-					start: "480px center",
-					end: "bottom top",
-					scrub: true,
-					markers: true,
-				},
-			});
-		});
-	});
+      // 📏 步驟 2: 將容器放大（設置更大的間距和尺寸）
+      gsap.set(el, {
+        rowGap: '100px',
+        columnGap: '200px',
+        width: rectBefore.width * 2,
+        height: rectBefore.height * 2,
+      });
 
-	return (
-		<section
-			className='text-center text-3xl text-gray-700 w-full h-screen overflow-hidden relativ brightness-70'
-			ref={wrapper}>
-			<div
-				className='grid grid-cols-3 grid-rows-3 w-full h-full gap-10 px-3 absolute inset-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'
-				ref={container}>
-				{pics.map((pic, index) => {
-					return (
-						<div
-							key={pic.name}
-							ref={(el) => {
-								imgRefs.current[index] = el;
-							}}
-							className={`${
-								index === 1 || index === 4 || index === 7 ? "moveEl" : ""
-							}`}>
-							<img
-								src={pic.url}
-								alt={pic.name}
-								className='object-cover w-full h-full shadow-lg'
-							/>
-						</div>
-					);
-				})}
-			</div>
-		</section>
-	);
+      // 📏 步驟 3: 測量放大後中間格子的尺寸
+      const rect = middlePic.getBoundingClientRect();
+      console.log('🔍 放大後格子尺寸：', rect);
+
+      // 🎨 步驟 4: 創建黑色遮罩元素
+      const newDiv = document.createElement('div');
+      newDiv.className =
+        'newDiv bg-black absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-lg flex flex-col items-start justify-center overflow-hidden';
+      el.appendChild(newDiv);
+
+      // 📝 步驟 5: 創建文字元素
+      const vsHead = document.createElement('img');
+      const vsSide = document.createElement('img');
+      const vsFoot = document.createElement('img');
+      vsHead.src = '/portfolio/vscode_head.png';
+			vsHead.className = 'w-full flex-shrink-0';
+      vsSide.src = '/portfolio/vscode_sidebar.png';
+			vsSide.className = 'h-[calc(100%-53px)]';
+      vsFoot.src = '/portfolio/vscode_footer.png';
+			vsFoot.className = 'w-full flex-shrink-0';
+      newDiv.appendChild(vsHead);
+      newDiv.appendChild(vsSide);
+      newDiv.appendChild(vsFoot);
+
+      // 🎨 步驟 6: 設置遮罩的初始尺寸（比格子大兩倍）
+      gsap.set('.newDiv', {
+        width: rect.width * 1.5,
+        height: rect.height * 1.5,
+      });
+
+      // 👻 步驟 7: 隱藏中間的圖片，顯示遮罩文字
+      gsap.set(middlePic, { opacity: 0 });
+      gsap.set('.newSpanEl', { opacity: 1 });
+
+      // 🎬 步驟 8: 創建時間軸動畫（主要的滾動動畫）
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: wrapperEl, // 觸發元素：外層 section
+          start: 'center center', // 開始位置：元素中心到達視窗中心時
+          end: '+=250%', // 結束位置：從開始位置再滾動 250% 的距離
+          pin: wrapperEl, // 固定外層元素（滾動時保持在視窗中）
+          scrub: 1, // 動畫與滾動同步（值越大越平滑）
+          pinSpacing: true, // 為固定元素添加空間
+          markers: false, // 不顯示除錯標記
+        },
+      });
+
+      // 🎬 時間軸動畫序列
+      tl.to(el, {
+        // 動畫 1: 容器縮小回原始尺寸
+        rowGap: '10px',
+        columnGap: '35px',
+        width: rectBefore.width,
+        height: rectBefore.height,
+        onComplete: () => {
+          // 動畫完成後的回調
+          const finalRect = middlePic.getBoundingClientRect();
+          console.log('✅ 動畫完成後的實際格子尺寸：', finalRect);
+        },
+      })
+        .to(
+          '.newSpanEl',
+          {
+            // 動畫 2: 文字淡出（與動畫 1 重疊 0.4 秒）
+            opacity: 0,
+            duration: 0.5,
+          },
+          -0.4, // 負數表示提前開始（重疊）
+        )
+        .to(
+          '.newDiv',
+          {
+            // 動畫 3: 遮罩縮小（與動畫 1 重疊 0.4 秒）
+            width: rect.width / 2,
+            height: rect.height / 2,
+            duration: 1.5,
+          },
+          -0.4,
+        )
+        .to('.newDiv', {
+          // 動畫 4: 遮罩完全隱藏
+          opacity: 0,
+          duration: 0.01,
+        })
+        .to(middlePic, {
+          // 動畫 5: 顯示中間的圖片
+          opacity: 1,
+          duration: 0.01,
+        });
+
+      /**
+       * 🎬 步驟 9: 中間列向下移動的動畫
+       * 為所有 class 包含 'moveEl' 的元素添加滾動動畫
+       */
+      const moveEls = gsap.utils.toArray<HTMLElement>('.moveEl');
+      moveEls.forEach((el) => {
+        gsap.to(el, {
+          y: 300, // 向下移動 300px
+          delay: 0,
+          scrollTrigger: {
+            trigger: wrapperEl,
+            start: '900px center', // 當元素距離視窗中心 900px 時開始
+            end: 'bottom top', // 元素底部到達視窗頂部時結束
+            scrub: true, // 與滾動同步
+            markers: true, // 顯示除錯標記
+          },
+        });
+      });
+
+      // ==================== 動畫設置結束 ====================
+
+      /**
+       * 🧹 清理函數
+       * useGSAP 會在以下情況自動執行這個函數：
+       * 1. 組件卸載時
+       * 2. dependencies 改變時（因為設置了 revertOnUpdate: true）
+       */
+      return () => {
+        // 移除動態創建的遮罩元素，避免重複創建
+        const dynamicDiv = el?.querySelector('.newDiv');
+        if (dynamicDiv) {
+          dynamicDiv.remove();
+        }
+      };
+    },
+    {
+      /**
+       * 🎯 關鍵配置：dependencies
+       * 當 windowSize 改變時，useGSAP 會：
+       * 1. 執行清理函數（移除舊的動畫和元素）
+       * 2. 重新執行整個動畫邏輯
+       */
+      dependencies: [windowSize],
+
+      /**
+       * 🎯 關鍵配置：scope
+       * 限制 GSAP 選擇器的範圍在 container 內
+       * 這樣可以避免影響到頁面其他地方的元素
+       */
+      scope: container,
+
+      /**
+       * 🎯 關鍵配置：revertOnUpdate
+       * 設為 true 表示每次 dependencies 更新時：
+       * - 自動清理所有 GSAP 動畫
+       * - 自動清理所有 ScrollTrigger
+       * - 然後重新執行動畫邏輯
+       */
+      revertOnUpdate: true,
+    },
+  );
+
+  return (
+    <section
+      className="text-center text-3xl text-gray-700 w-full h-screen overflow-hidden relative brightness-70"
+      ref={wrapper} // 綁定外層容器 ref
+    >
+      <div
+        className="grid grid-cols-3 grid-rows-3 w-full h-full gap-10 px-3 absolute inset-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+        ref={container} // 綁定圖片容器 ref
+      >
+        {pics.map((pic, index) => {
+          return (
+            <div
+              key={pic.name}
+              ref={(el) => {
+                // 將每個圖片 div 存入 refs 陣列
+                imgRefs.current[index] = el;
+              }}
+              className={`${
+                // 索引 1, 4, 7 的圖片（中間列）添加 moveEl class
+                index === 1 || index === 4 || index === 7 ? 'moveEl' : ''
+              }`}
+            >
+              <img
+                src={pic.url}
+                alt={pic.name}
+                className="object-cover w-full h-full shadow-lg"
+              />
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  );
 }
