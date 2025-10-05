@@ -95,8 +95,6 @@ export default function Portfolio() {
       // 安全檢查：如果元素不存在就不執行
       if (!middlePic || !el || !wrapperEl) return;
 
-      console.log('🔄 動畫重新執行，視窗尺寸：', windowSize);
-
       // ==================== 動畫設置開始 ====================
 
       // 📏 步驟 1: 測量容器的原始尺寸
@@ -126,14 +124,30 @@ export default function Portfolio() {
       const vsSide = document.createElement('img');
       const vsFoot = document.createElement('img');
       vsHead.src = '/portfolio/vscode_head.png';
-			vsHead.className = 'w-full flex-shrink-0';
+      vsHead.className = 'w-full flex-shrink-0';
       vsSide.src = '/portfolio/vscode_sidebar.png';
-			vsSide.className = 'h-[calc(100%-53px)]';
       vsFoot.src = '/portfolio/vscode_footer.png';
-			vsFoot.className = 'w-full flex-shrink-0';
+      vsFoot.className = 'w-full flex-shrink-0';
       newDiv.appendChild(vsHead);
       newDiv.appendChild(vsSide);
       newDiv.appendChild(vsFoot);
+
+      // ✨ 使用 ResizeObserver 監聽高度變化
+      const updateSideHeight = () => {
+        const headHeight = vsHead.offsetHeight;
+        const footHeight = vsFoot.offsetHeight;
+        const containerHeight = newDiv.offsetHeight;
+        const remainingHeight = containerHeight - headHeight - footHeight;
+        vsSide.style.height = `${remainingHeight}px`;
+      };
+
+      const observer = new ResizeObserver(() => {
+        updateSideHeight();
+      });
+
+      observer.observe(vsHead);
+      observer.observe(vsFoot);
+      observer.observe(newDiv);
 
       // 🎨 步驟 6: 設置遮罩的初始尺寸（比格子大兩倍）
       gsap.set('.newDiv', {
@@ -144,6 +158,9 @@ export default function Portfolio() {
       // 👻 步驟 7: 隱藏中間的圖片，顯示遮罩文字
       gsap.set(middlePic, { opacity: 0 });
       gsap.set('.newSpanEl', { opacity: 1 });
+      gsap.set(vsHead, { y: '-100%' });
+      gsap.set(vsSide, { x: '-100%' });
+      gsap.set(vsFoot, { y: '100%' });
 
       // 🎬 步驟 8: 創建時間軸動畫（主要的滾動動畫）
       const tl = gsap.timeline({
@@ -165,20 +182,14 @@ export default function Portfolio() {
         columnGap: '35px',
         width: rectBefore.width,
         height: rectBefore.height,
-        onComplete: () => {
-          // 動畫完成後的回調
-          const finalRect = middlePic.getBoundingClientRect();
-          console.log('✅ 動畫完成後的實際格子尺寸：', finalRect);
-        },
       })
         .to(
-          '.newSpanEl',
+          [vsHead, vsSide, vsFoot],
           {
-            // 動畫 2: 文字淡出（與動畫 1 重疊 0.4 秒）
-            opacity: 0,
-            duration: 0.5,
+						x: '0%',
+						y: '0%',
           },
-          -0.4, // 負數表示提前開始（重疊）
+          -0.8, // 負數表示提前開始（重疊）
         )
         .to(
           '.newDiv',
@@ -234,6 +245,9 @@ export default function Portfolio() {
         if (dynamicDiv) {
           dynamicDiv.remove();
         }
+
+        // 移除監聽器
+        observer.disconnect();
       };
     },
     {
