@@ -186,8 +186,8 @@ export default function Portfolio() {
         .to(
           [vsHead, vsSide, vsFoot],
           {
-						x: '0%',
-						y: '0%',
+            x: '0%',
+            y: '0%',
           },
           -0.8, // 負數表示提前開始（重疊）
         )
@@ -226,7 +226,7 @@ export default function Portfolio() {
             start: '900px center', // 當元素距離視窗中心 900px 時開始
             end: 'bottom top', // 元素底部到達視窗頂部時結束
             scrub: true, // 與滾動同步
-            markers: true, // 顯示除錯標記
+            markers: false, // 顯示除錯標記
           },
         });
       });
@@ -279,7 +279,7 @@ export default function Portfolio() {
 
   return (
     <section
-      className="text-center text-3xl text-gray-700 w-full h-screen overflow-hidden relative brightness-70"
+      className="text-center text-3xl text-gray-700 w-full h-screen overflow-hidden relative brightness-90"
       ref={wrapper} // 綁定外層容器 ref
     >
       <div

@@ -1,3 +1,7 @@
 export default function AboutMe() {
-	return <div className='w-full h-screen'>About Me</div>;
+  return (
+    <div className="w-full h-screen text-white">
+      About Me
+    </div>
+  );
 }
