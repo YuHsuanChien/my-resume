@@ -195,8 +195,8 @@ export default function Portfolio() {
           '.newDiv',
           {
             // 動畫 3: 遮罩縮小（與動畫 1 重疊 0.4 秒）
-            width: rect.width / 2,
-            height: rect.height / 2,
+            width: rect.width / 1.85,
+            height: rect.height / 1.85,
             duration: 1.5,
           },
           -0.4,
