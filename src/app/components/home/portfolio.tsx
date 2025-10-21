@@ -169,9 +169,9 @@ export default function Portfolio() {
           start: 'center center', // 開始位置：元素中心到達視窗中心時
           end: '+=250%', // 結束位置：從開始位置再滾動 250% 的距離
           pin: wrapperEl, // 固定外層元素（滾動時保持在視窗中）
-          scrub: 1, // 動畫與滾動同步（值越大越平滑）
+          scrub: 2, // 動畫與滾動同步（值越大越平滑）
           pinSpacing: true, // 為固定元素添加空間
-          markers: false, // 不顯示除錯標記
+          markers: true, // 不顯示除錯標記
         },
       });
 
@@ -223,10 +223,10 @@ export default function Portfolio() {
           delay: 0,
           scrollTrigger: {
             trigger: wrapperEl,
-            start: '900px center', // 當元素距離視窗中心 900px 時開始
+            start: '100px top', // 當元素距離視窗頂部 100px 時開始
             end: 'bottom top', // 元素底部到達視窗頂部時結束
             scrub: true, // 與滾動同步
-            markers: false, // 顯示除錯標記
+            markers: true, // 顯示除錯標記
           },
         });
       });

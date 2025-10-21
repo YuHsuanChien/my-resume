@@ -15,6 +15,7 @@ interface SkillIcon {
 export default function Skill() {
   const iconsRef = useRef<(HTMLDivElement | null)[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
 
   const [skillsData, setSkillsData] = useState<SkillIcon[]>([]);
 
@@ -87,7 +88,7 @@ export default function Skill() {
           ease: 'back.out(0.8)',
           scrollTrigger: {
             trigger: container,
-            start: 'top 50%',
+            start: 'top 80%',
             toggleActions: 'play none none reverse',
             // play - 當第一次進入觸發區域時：播放動畫
             // none - 當離開觸發區域時：什麼都不做
@@ -101,8 +102,9 @@ export default function Skill() {
     return () => clearTimeout(timer);
   }, [skillsData]); // 依賴於 skillsData，當資料載入後執行動畫
 
+  
   return (
-    <section className="w-full flex flex-col py-32">
+    <section className="w-full flex flex-col pb-20" ref={sectionRef}>
       <div className="max-w-7xl w-full mx-auto flex flex-col">
         <p className="text-white">_____ My Skill?</p>
         <div className=" w-full flex justify-between items-center text-white">
