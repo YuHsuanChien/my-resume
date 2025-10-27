@@ -99,7 +99,6 @@ export default function Portfolio() {
 
       // 📏 步驟 1: 測量容器的原始尺寸
       const rectBefore = el.getBoundingClientRect();
-      console.log('📦 容器原始尺寸：', rectBefore);
 
       // 📏 步驟 2: 將容器放大（設置更大的間距和尺寸）
       gsap.set(el, {
@@ -111,7 +110,6 @@ export default function Portfolio() {
 
       // 📏 步驟 3: 測量放大後中間格子的尺寸
       const rect = middlePic.getBoundingClientRect();
-      console.log('🔍 放大後格子尺寸：', rect);
 
       // 🎨 步驟 4: 創建黑色遮罩元素
       const newDiv = document.createElement('div');
@@ -171,7 +169,7 @@ export default function Portfolio() {
           pin: wrapperEl, // 固定外層元素（滾動時保持在視窗中）
           scrub: 2, // 動畫與滾動同步（值越大越平滑）
           pinSpacing: true, // 為固定元素添加空間
-          markers: true, // 不顯示除錯標記
+          markers: false, // 不顯示除錯標記
         },
       });
 
@@ -226,7 +224,7 @@ export default function Portfolio() {
             start: '100px top', // 當元素距離視窗頂部 100px 時開始
             end: 'bottom top', // 元素底部到達視窗頂部時結束
             scrub: true, // 與滾動同步
-            markers: true, // 顯示除錯標記
+            markers: false, // 顯示除錯標記
           },
         });
       });

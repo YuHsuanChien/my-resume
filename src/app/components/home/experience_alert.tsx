@@ -47,6 +47,16 @@ const InfoField = ({
     return value;
   };
 
+  // 如果是 responsibilities，使用 div 而不是 p 標籤
+  if (fieldType === 'responsibilities') {
+    return (
+      <div className="text-gray-300 text-sm leading-6 mb-1">
+        <span className="inline-block">{label}：</span>
+        <div className="mt-1">{renderValue()}</div>
+      </div>
+    );
+  }
+
   return (
     <p className="text-gray-300 text-sm leading-6 mb-1">
       <span>{label}：</span>
@@ -60,9 +70,16 @@ export default function ExperienceAlert() {
     useExperienceAlertStore();
 
   const [experienceData, setExperienceData] = useState<ExperienceData[]>([]);
-  const [selectedData, setSelectedData] = useState<ExperienceData>(
-    {} as ExperienceData,
-  );
+  const [selectedData, setSelectedData] = useState<ExperienceData>({
+    company: '',
+    title: '',
+    duration: '',
+    location: '',
+    responsibilities: [],
+    type: '',
+    technologies: [],
+    img: '',
+  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -220,7 +237,7 @@ export default function ExperienceAlert() {
                 </div>
               ) : error ? (
                 <div className="text-red-400 text-2xl">⚠️</div>
-              ) : (
+              ) : selectedData.img ? (
                 <div className="w-40 h-40 bg-white">
                   <Image
                     src={`/experience/${selectedData.img}`}
@@ -229,6 +246,10 @@ export default function ExperienceAlert() {
                     height={160}
                     className="object-cover w-full h-full"
                   />
+                </div>
+              ) : (
+                <div className="w-40 h-40 bg-gray-200 flex items-center justify-center">
+                  <span className="text-gray-500">No Image</span>
                 </div>
               )}
             </div>
