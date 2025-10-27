@@ -1,0 +1,75 @@
+[
+  {
+    "company": "向上國際科技股份有限公司",
+    "title": "應用系統工程師 (全端工程師)",
+    "type": "full_stack_developer",
+    "duration": "2024年7月 - 至今",
+    "location": "台中市北區",
+    "responsibilities": [
+      "負責公司視覺網站製作與雲端佈署",
+      "執行網站維護作業，包含SSL憑證更新與系統維護",
+      "串接金流系統並維護活動打卡機系統",
+      "開發與應用BPM（企業流程管理）系統"
+    ],
+    "technologies": [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "TypeScript",
+      "Angular",
+      "ReactJS",
+      "Next.js",
+      "NestJS",
+      "Node.js",
+      "MySQL",
+      "MS SQL",
+      "jQuery",
+      "Bootstrap",
+      "tailwindcss",
+      "Git",
+      "Docker",
+      "CICD",
+      "GCP",
+      "Figma"
+    ],
+    "img": "xsg.png"
+  },
+  {
+    "company": "寶熊漁具股份有限公司",
+    "title": "活動專員 (活動企劃)",
+    "duration": "2019年3月 - 2020年3月",
+    "type": "event_planner",
+    "location": "台中市潭子區",
+    "responsibilities": [
+      "規劃觀光工廠館內導覽內容、教案撰寫及活動企劃",
+      "負責官網架設與營運，執行外展宣傳工作",
+      "擔任台中市產業故事館發展協會理事長秘書，參與協會活動規劃",
+      "接待國外貴賓及各界公部門長官，擔任一線導覽人員"
+    ],
+    "technologies": ["活動企劃", "網站架設", "導覽規劃", "內容撰寫"],
+    "img": "okuma.png"
+  },
+  {
+    "company": "天地蘊品牌規畫公司",
+    "title": "專案執行 (行銷企劃)",
+    "duration": "2016年11月 - 2019年1月",
+    "type": "brand_designer",
+    "location": "屏東縣內埔鄉",
+    "responsibilities": [
+      "共同成立品牌規劃設計工作室，專注於品牌策略發展",
+      "製作教材講義並擔任屏科大企業管理系專題助教",
+      "提供市場競爭者分析及品牌規劃諮詢服務",
+      "經營社群媒體（Facebook、Instagram）並制定電商策略",
+      "成功完成多個客戶專案，包含屏東蓮霧農品牌規劃"
+    ],
+    "technologies": [
+      "品牌規劃",
+      "視覺攝影",
+      "電商平台",
+      "社群操作",
+      "網站架構",
+      "市場分析"
+    ],
+    "img": "TTY.png"
+  }
+]

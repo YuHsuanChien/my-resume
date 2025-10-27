@@ -4,12 +4,14 @@ import { useState, useRef, useEffect } from 'react';
 import { TbWriting } from 'react-icons/tb';
 import { MdEventNote } from 'react-icons/md';
 import { FaCode } from 'react-icons/fa';
+import { useExperienceAlertStore } from '@/stores/inedex';
 
 export default function Experience() {
   const experienceData = [
     {
       id: 1,
       title: 'Brand Designer',
+      type: 'brand_designer',
       description:
         'Creating visual identities and brand experiences that resonate with audiences.',
       icon: TbWriting,
@@ -17,6 +19,7 @@ export default function Experience() {
     {
       id: 2,
       title: 'Event Planner',
+      type: 'event_planner',
       description:
         'Organizing memorable events with attention to detail and creativity.',
       icon: MdEventNote,
@@ -24,6 +27,7 @@ export default function Experience() {
     {
       id: 3,
       title: 'Full Stack Developer',
+      type: 'full_stack_developer',
       description:
         'Building end-to-end web solutions with modern technologies and best practices.',
       icon: FaCode,
@@ -35,6 +39,10 @@ export default function Experience() {
   const [isMounted, setIsMounted] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const setExperienceAlertIsOpen = useExperienceAlertStore(
+    (state) => state.setExperienceAlertIsOpen,
+  );
+  const setType = useExperienceAlertStore((state) => state.setType);
 
   useEffect(() => {
     setIsMounted(true);
@@ -83,14 +91,13 @@ export default function Experience() {
     const isHovered = index === hoveredIndex;
     const scale = isCurrent ? 1 : 0.8;
     const opacity = isCurrent ? 1 : 0.5;
-    const rotateX = isHovered ? 20 : 0; // 向上傾斜30度
 
     return {
       width: '250px',
       height: '300px',
       transform: isHovered
-        ? `translate3d(${x}px, 0px, ${z}px) rotateY(${-angle}deg) rotateX(${rotateX}deg) scale(${scale})`
-        : `translate3d(${x}px, 0px, ${z}px) rotateY(${-angle}deg) rotateX(${rotateX}deg) scale(${scale})`,
+        ? `translate3d(${x}px, 0px, ${z}px) rotateY(${-angle}deg)  scale(${scale})`
+        : `translate3d(${x}px, 0px, ${z}px) rotateY(${-angle}deg)  scale(${scale})`,
       opacity,
       zIndex: isCurrent ? 10 : 1,
       boxShadow: isHovered
@@ -144,7 +151,13 @@ export default function Experience() {
                   onMouseEnter={() => setHoveredIndex(index)}
                   onMouseLeave={() => setHoveredIndex(null)}
                 >
-                  <div className="flex flex-col items-center justify-center h-full absolute inset-0">
+                  <div
+                    className="flex flex-col items-center justify-center h-full absolute inset-0"
+                    style={{
+                      WebkitFontSmoothing: 'antialiased',
+                      textRendering: 'optimizeLegibility',
+                    }}
+                  >
                     <div className="p-3 mb-6 bg-gray-700 rounded-full flex items-center justify-center text-white text-4xl">
                       <item.icon />
                     </div>
@@ -154,6 +167,31 @@ export default function Experience() {
                     <p className="text-sm text-gray-400 text-center px-4">
                       {item.description}
                     </p>
+                    <button
+                      className="mt-4 relative group px-6 py-2 bg-gradient-to-r from-purple-900/50 via-indigo-800/40 to-pink-900/50 border border-purple-400/60 rounded-lg transition-all duration-300 hover:from-purple-600/60 hover:via-indigo-500/50 hover:to-pink-600/60 hover:border-purple-300/80 hover:shadow-lg hover:shadow-purple-500/40 overflow-hidden cursor-pointer"
+                      style={{
+                        WebkitFontSmoothing: 'antialiased',
+                        textRendering: 'optimizeLegibility',
+                      }}
+                      onClick={() => {
+                        setExperienceAlertIsOpen(true);
+                        setType(item.type);
+                      }}
+                    >
+                      {/* 科技感背景動畫 */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-purple-300/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out"></div>
+
+                      {/* 按鈕文字 */}
+                      <span className="relative z-10 text-purple-200 font-medium text-sm group-hover:text-white transition-colors duration-300">
+                        Read More
+                      </span>
+
+                      {/* 科技感邊框動畫 */}
+                      <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-purple-400 to-transparent"></div>
+                        <div className="absolute bottom-0 right-0 w-full h-[1px] bg-gradient-to-l from-transparent via-pink-400 to-transparent"></div>
+                      </div>
+                    </button>
                   </div>
                 </div>
               ))}
