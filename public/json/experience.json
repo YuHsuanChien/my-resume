@@ -1,15 +1,15 @@
 [
   {
-    "company": "向上國際科技股份有限公司",
-    "title": "應用系統工程師 (全端工程師)",
+    "company": "XSGroup Co., Ltd.",
+    "title": "Application System Engineer (Full Stack Developer)",
     "type": "full_stack_developer",
-    "duration": "2024年7月 - 至今",
-    "location": "台中市北區",
+    "duration": "July 2024 - Present",
+    "location": "North District, Taichung City",
     "responsibilities": [
-      "負責公司視覺網站製作與雲端佈署",
-      "執行網站維護作業，包含SSL憑證更新與系統維護",
-      "串接金流系統並維護活動打卡機系統",
-      "開發與應用BPM（企業流程管理）系統"
+      "Responsible for company visual website development and cloud deployment",
+      "Execute website maintenance operations, including SSL certificate updates and system maintenance",
+      "Integrate payment gateway systems and maintain event check-in systems",
+      "Develop and implement BPM (Business Process Management) systems"
     ],
     "technologies": [
       "HTML",
@@ -35,40 +35,45 @@
     "img": "xsg.png"
   },
   {
-    "company": "寶熊漁具股份有限公司",
-    "title": "活動專員 (活動企劃)",
-    "duration": "2019年3月 - 2020年3月",
+    "company": "Okuma Fishing Tackle Co., Ltd.",
+    "title": "Event Specialist (Event Planner)",
+    "duration": "March 2019 - March 2020",
     "type": "event_planner",
-    "location": "台中市潭子區",
+    "location": "Tanzi District, Taichung City",
     "responsibilities": [
-      "規劃觀光工廠館內導覽內容、教案撰寫及活動企劃",
-      "負責官網架設與營運，執行外展宣傳工作",
-      "擔任台中市產業故事館發展協會理事長秘書，參與協會活動規劃",
-      "接待國外貴賓及各界公部門長官，擔任一線導覽人員"
+      "Plan tourist factory guided tour content, curriculum development and event planning",
+      "Responsible for official website construction and operation, execute outreach promotion work",
+      "Serve as secretary to the chairman of Taichung Industrial Story Museum Development Association, participate in association event planning",
+      "Host foreign guests and government officials from various sectors, serve as frontline tour guide"
     ],
-    "technologies": ["活動企劃", "網站架設", "導覽規劃", "內容撰寫"],
+    "technologies": [
+      "Event Planning",
+      "Website Development",
+      "Tour Planning",
+      "Content Writing"
+    ],
     "img": "okuma.png"
   },
   {
-    "company": "天地蘊品牌規畫公司",
-    "title": "專案執行 (行銷企劃)",
-    "duration": "2016年11月 - 2019年1月",
+    "company": "TTY Brand Planning Company",
+    "title": "Project Executive (Marketing Planner)",
+    "duration": "November 2016 - January 2019",
     "type": "brand_designer",
-    "location": "屏東縣內埔鄉",
+    "location": "Neipu Township, Pingtung County",
     "responsibilities": [
-      "共同成立品牌規劃設計工作室，專注於品牌策略發展",
-      "製作教材講義並擔任屏科大企業管理系專題助教",
-      "提供市場競爭者分析及品牌規劃諮詢服務",
-      "經營社群媒體（Facebook、Instagram）並制定電商策略",
-      "成功完成多個客戶專案，包含屏東蓮霧農品牌規劃"
+      "Co-founded brand planning design studio, focusing on brand strategy development",
+      "Create educational materials and serve as teaching assistant for business management department at NPUST",
+      "Provide market competitor analysis and brand planning consulting services",
+      "Manage social media (Facebook, Instagram) and develop e-commerce strategies",
+      "Successfully completed multiple client projects, including Pingtung wax apple agricultural brand planning"
     ],
     "technologies": [
-      "品牌規劃",
-      "視覺攝影",
-      "電商平台",
-      "社群操作",
-      "網站架構",
-      "市場分析"
+      "Brand Planning",
+      "Visual Photography",
+      "E-commerce Platform",
+      "Social Media Management",
+      "Website Architecture",
+      "Market Analysis"
     ],
     "img": "TTY.png"
   }

@@ -51,7 +51,7 @@ const InfoField = ({
   if (fieldType === 'responsibilities') {
     return (
       <div className="text-gray-300 text-sm leading-6 mb-1">
-        <span className="inline-block">{label}：</span>
+        <span className="inline-block font-bold">{label}：</span>
         <div className="mt-1">{renderValue()}</div>
       </div>
     );
@@ -59,7 +59,7 @@ const InfoField = ({
 
   return (
     <p className="text-gray-300 text-sm leading-6 mb-1">
-      <span>{label}：</span>
+      <span className="inline-block font-bold">{label}：</span>
       <span>{renderValue()}</span>
     </p>
   );
@@ -199,7 +199,7 @@ export default function ExperienceAlert() {
               </p>
 
               <InfoField
-                label="職稱"
+                label="Title"
                 fieldType="title"
                 value={selectedData.title || ''}
                 loading={loading}
@@ -207,7 +207,7 @@ export default function ExperienceAlert() {
               />
 
               <InfoField
-                label="期間"
+                label="Duration"
                 fieldType="duration"
                 value={selectedData.duration || ''}
                 loading={loading}
@@ -215,7 +215,7 @@ export default function ExperienceAlert() {
               />
 
               <InfoField
-                label="負責"
+                label="Responsibilities"
                 fieldType="responsibilities"
                 value={selectedData.responsibilities || []}
                 loading={loading}
@@ -223,7 +223,7 @@ export default function ExperienceAlert() {
               />
 
               <InfoField
-                label="技能"
+                label="Technologies"
                 fieldType="technologies"
                 value={selectedData.technologies || []}
                 loading={loading}
