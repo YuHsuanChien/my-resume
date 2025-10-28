@@ -12,24 +12,21 @@ export default function Experience() {
       id: 1,
       title: 'Brand Designer',
       type: 'brand_designer',
-      description:
-        'Creating visual identities and brand experiences that resonate with audiences.',
+      description: 'TTY Brand Planning Company',
       icon: TbWriting,
     },
     {
       id: 2,
       title: 'Event Planner',
       type: 'event_planner',
-      description:
-        'Organizing memorable events with attention to detail and creativity.',
+      description: 'Okuma Fishing Tackle Co., Ltd.',
       icon: MdEventNote,
     },
     {
       id: 3,
       title: 'Full Stack Developer',
       type: 'full_stack_developer',
-      description:
-        'Building end-to-end web solutions with modern technologies and best practices.',
+      description: 'XSGroup Co., Ltd.',
       icon: FaCode,
     },
   ];
@@ -146,10 +143,14 @@ export default function Experience() {
               {experienceData.map((item, index) => (
                 <div
                   key={item.id}
-                  className="absolute p-8 rounded-xl shadow-2xl transition-all duration-600 ease-out"
+                  className="absolute p-8 rounded-xl shadow-2xl transition-all duration-600 ease-out cursor-pointer"
                   style={getCardStyle(index)}
                   onMouseEnter={() => setHoveredIndex(index)}
                   onMouseLeave={() => setHoveredIndex(null)}
+                  onClick={() => {
+                    setExperienceAlertIsOpen(true);
+                    setType(item.type);
+                  }}
                 >
                   <div
                     className="flex flex-col items-center justify-center h-full absolute inset-0"
@@ -161,37 +162,12 @@ export default function Experience() {
                     <div className="p-3 mb-6 bg-gray-700 rounded-full flex items-center justify-center text-white text-4xl">
                       <item.icon />
                     </div>
-                    <h3 className="text-white text-xl font-bold mb-4 text-center">
-                      {item.title}
-                    </h3>
                     <p className="text-sm text-gray-400 text-center px-4">
                       {item.description}
                     </p>
-                    <button
-                      className="mt-4 relative group px-6 py-2 bg-gradient-to-r from-purple-900/50 via-indigo-800/40 to-pink-900/50 border border-purple-400/60 rounded-lg transition-all duration-300 hover:from-purple-600/60 hover:via-indigo-500/50 hover:to-pink-600/60 hover:border-purple-300/80 hover:shadow-lg hover:shadow-purple-500/40 overflow-hidden cursor-pointer"
-                      style={{
-                        WebkitFontSmoothing: 'antialiased',
-                        textRendering: 'optimizeLegibility',
-                      }}
-                      onClick={() => {
-                        setExperienceAlertIsOpen(true);
-                        setType(item.type);
-                      }}
-                    >
-                      {/* 科技感背景動畫 */}
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-purple-300/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out"></div>
-
-                      {/* 按鈕文字 */}
-                      <span className="relative z-10 text-purple-200 font-medium text-sm group-hover:text-white transition-colors duration-300">
-                        Read More
-                      </span>
-
-                      {/* 科技感邊框動畫 */}
-                      <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-purple-400 to-transparent"></div>
-                        <div className="absolute bottom-0 right-0 w-full h-[1px] bg-gradient-to-l from-transparent via-pink-400 to-transparent"></div>
-                      </div>
-                    </button>
+                    <h3 className="text-white text-xl font-bold mt-4 text-center">
+                      {item.title}
+                    </h3>
                   </div>
                 </div>
               ))}
